@@ -1,0 +1,51 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+plugins {
+    id 'com.android.application' version '7.2.1' apply false
+    id 'com.android.library' version '7.2.1' apply false
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
+    defaultConfig {
+        applicationId "net.mobilegts.candyjump"
+        minSdkVersion 19
+        targetSdkVersion27
+        multiDexEnabled true
+
+        ndk {
+            moduleName "player_shared"
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+
+
+    }
+    sourceSets.main {
+        jni.srcDirs = []// <-- disable automatic ndk-build call
+    }
+    productFlavors {
+    }
+}
+
+dependencies {
+    implementation('com.google.android.gms:play-services:+') { exclude module: 'support-v4' }
+    implementation 'libs/dagger-1.2.2.jar'
+    implementation 'libs/javax.inject-1.jar'
+    implementation 'libs/nineoldandroids-2.4.0.jar'
+    implementation 'libs/support-v4-19.0.1.jar'
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.android.support:support-core-utils:'
+}
+
